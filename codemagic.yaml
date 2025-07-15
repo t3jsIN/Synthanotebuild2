@@ -59,14 +59,24 @@ workflows:
         script: flutter config --enable-web
       - name: Build web
         script: flutter build web --release
+      - name: Deploy to Firebase Hosting (Alternative)
+        script: |
+          # Install Firebase CLI if not available
+          npm install -g firebase-tools
+          # Deploy to Firebase (requires FIREBASE_TOKEN environment variable)
+          # firebase deploy --only hosting --token $FIREBASE_TOKEN
+          echo "Web build completed. You can deploy to Firebase, Netlify, or other hosting services."
     artifacts:
       - build/web/
     publishing:
-      static_pages:
-        artifact_name: build/web
       email:
         recipients:
           - user@example.com
+      scripts:
+        - name: Custom deployment script
+          script: |
+            echo "You can add custom deployment scripts here"
+            echo "For example: deploy to Firebase, Netlify, AWS S3, etc."
           
   android-workflow:
     name: Android Build
@@ -102,4 +112,4 @@ workflows:
     publishing:
       email:
         recipients:
-          - t3js.slgkr@gmail.com
+          - user@example.com
