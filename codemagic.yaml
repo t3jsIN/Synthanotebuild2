@@ -23,6 +23,13 @@ workflows:
     scripts:
       - name: Get Flutter packages
         script: flutter pub get
+      - name: Clean up platform-specific packages
+        script: |
+          # Remove platform-specific packages that don't belong on iOS
+          flutter pub deps --json | grep -E "record_linux|record_windows" || true
+          # Clean any cached dependencies
+          flutter clean
+          flutter pub get
       - name: Install pods
         script: find . -name "Podfile" -execdir pod install \;
       - name: Build iOS
